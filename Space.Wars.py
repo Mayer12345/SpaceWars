@@ -16,7 +16,7 @@ circle_y = 460
 circle_r = 20
 square_w = 60
 square_h = 60
-hearts = 100
+hearts = 10
 laser_x = 60
 laser_y = 60
 laser_w = 10
@@ -54,11 +54,12 @@ while not done:
     if pressed[pygame.K_DOWN]: laser_y += 10
     if pressed[pygame.K_LEFT]: laser_x -= 10
     if pressed[pygame.K_RIGHT]: laser_x += 10
-    if (circle_x < laser_x + laser_w + circle_r) and (laser_y >= circle_y - (laser_h + circle_r)) and (circle_x + circle_r >= laser_x):
-        circle_x = 1000
-        laser_x = square_x
-        laser_y = square_y
-        laser_draw = False
+    if laser_draw == True:
+        if (circle_x < laser_x + laser_w + circle_r) and (laser_y >= circle_y - (laser_h + circle_r)) and (circle_x + circle_r >= laser_x):
+            circle_x = 1000
+            laser_x = square_x
+            laser_y = square_y
+            laser_draw = False
     if (circle_x < square_x + square_w + circle_r) and (square_y >= circle_y - (square_h + circle_r)) and (circle_x + circle_r >= square_x):
         hearts -= 1
     if square_y>440:
