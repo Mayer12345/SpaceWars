@@ -6,7 +6,7 @@ pygame.init()
 screen = pygame.display.set_mode((1000, 500))
 done = False
 is_blue = True
-Nuber_random = random.uniform(0, 500)
+Number_random = random.uniform(0, 500)
 square_x = 30.0
 square_y = 30.0
 icon_x = 750
