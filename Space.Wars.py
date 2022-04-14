@@ -50,10 +50,6 @@ while not done:
     if pressed[pygame.K_DOWN]: square_y += 10
     if pressed[pygame.K_LEFT]: square_x -= 10
     if pressed[pygame.K_RIGHT]: square_x += 10
-    if pressed[pygame.K_UP]: laser_y -= 10
-    if pressed[pygame.K_DOWN]: laser_y += 10
-    if pressed[pygame.K_LEFT]: laser_x -= 10
-    if pressed[pygame.K_RIGHT]: laser_x += 10
     if laser_draw == True:
         if (circle_x < laser_x + laser_w + circle_r) and (laser_y >= circle_y - (laser_h + circle_r)) and (circle_x + circle_r >= laser_x):
             circle_x = 1000
