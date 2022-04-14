@@ -41,7 +41,7 @@ while not done:
 
     laser_x += 5
     # This moves the circle across the screen
-    circle_x -= 10
+    circle_x -= 5
     icon_x = circle_x
     circle_y = icon_y
     # Move based on what the person types
@@ -57,11 +57,7 @@ while not done:
     if laser_draw == True:
         if (circle_x < laser_x + laser_w + circle_r) and (laser_y >= circle_y - (laser_h + circle_r)) and (circle_x + circle_r >= laser_x):
             circle_x = 1000
-            laser_x = square_x
-            laser_y = square_y
             laser_draw = False
-    if (circle_x < square_x + square_w + circle_r) and (square_y >= circle_y - (square_h + circle_r)) and (circle_x + circle_r >= square_x):
-        hearts -= 1
     if square_y>440:
         square_y = 440
     if icon_y>440:
