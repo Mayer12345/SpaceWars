@@ -72,7 +72,9 @@ while not done:
         icon_x = 0
     if icon_y<0:
         icon_y = 440
-
+    if laser_draw == true:
+      if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+        pygame.draw.rect(screen, color, pygame.Rect(square_x, square_y, 60, 60))
     # Check if the circle hits the square
 
     # print("Number of lives: ")
