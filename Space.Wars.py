@@ -6,11 +6,8 @@ pygame.init()
 screen = pygame.display.set_mode((1000, 500))
 done = False
 is_blue = True
-Number_random = random.uniform(0, 500)
 square_x = 30.0
 square_y = 30.0
-icon_x = 750
-icon_y = 350
 circle_x = 960
 circle_y = 460
 circle_r = 20
@@ -36,15 +33,13 @@ while not done:
             laser_draw = True
             laser_x = square_x
             laser_y = square_y
-    if circle_x == 0:
-        circle_y = Number_random
+    if circle_x <= 0:
+        circle_y = random.randint(0, 500)
 
     laser_x += 5
     # This moves the circle across the screen
     circle_x -= 5
-    icon_x = circle_x
-    circle_y = icon_y
-    # Move based on what the person types
+        # Move based on what the person types
     pressed = pygame.key.get_pressed()
     if pressed[pygame.K_UP]: square_y -= 10
     if pressed[pygame.K_DOWN]: square_y += 10
@@ -54,10 +49,9 @@ while not done:
         if (circle_x < laser_x + laser_w + circle_r) and (laser_y >= circle_y - (laser_h + circle_r)) and (circle_x + circle_r >= laser_x):
             circle_x = 1000
             laser_draw = False
+            circle_y = random.randint(10, 490)
     if square_y>440:
         square_y = 440
-    if icon_y>440:
-        icon_y = 0
     if circle_x<0:
         circle_x = 1000
     if square_x<0:
@@ -66,13 +60,6 @@ while not done:
         square_x = 1000
     if square_y<0:
         square_y = 0
-    if icon_x<0:
-        icon_x = 1000
-    if icon_x>1000:
-        icon_x = 0
-    if icon_y<0:
-        icon_y = 440
-
     # Check if the circle hits the square
 
     # print("Number of lives: ")
