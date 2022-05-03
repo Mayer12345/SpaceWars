@@ -8,6 +8,7 @@ done = False
 is_blue = True
 square_x = 30.0
 square_y = 30.0
+Score = 0
 circle_x = 960
 circle_y = 460
 circle_r = 20
@@ -38,7 +39,7 @@ while not done:
 
     laser_x += 5
     # This moves the circle across the screen
-    circle_x -= 5
+    circle_x -= 10
         # Move based on what the person types
     pressed = pygame.key.get_pressed()
     if pressed[pygame.K_UP]: square_y -= 10
@@ -50,6 +51,7 @@ while not done:
             circle_x = 1000
             laser_draw = False
             circle_y = random.randint(10, 490)
+            Score += 10
     if square_y>440:
         square_y = 440
     if circle_x<0:
@@ -66,7 +68,7 @@ while not done:
     if circle_x == 0:     # Set the screen red
             hearts -= 1
     else:
-        # Set the screen blue
+        # Set the screen black
         screen.fill((0, 0, 0))
     # desplay text
     myfont = pygame.font.SysFont('lobster', 50)
@@ -77,6 +79,9 @@ while not done:
         textsurface = myfont.render('GAME OVER', False, (255, 0, 0))
         screen.blit(textsurface,(25, 200))
         done = True
+    myfont = pygame.font.SysFont('lobster', 50)
+    textsurface = myfont.render('Score: %d' % Score, False, (255, 100, 10))
+    screen.blit(textsurface,(380, 40))
     if laser_x == 1000:
         laser_draw = False
     if laser_draw == True:
