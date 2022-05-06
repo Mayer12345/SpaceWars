@@ -35,7 +35,7 @@ while not done:
             laser_x = square_x
             laser_y = square_y
     if circle_x <= 0:
-        circle_y = random.randint(0, 500)
+        circle_y = random.randint(50, 450)
 
     laser_x += 5
     # This moves the circle across the screen
@@ -47,7 +47,7 @@ while not done:
     if pressed[pygame.K_LEFT]: square_x -= 10
     if pressed[pygame.K_RIGHT]: square_x += 10
     if laser_draw == True:
-        if (circle_x < laser_x + laser_w + circle_r) and (laser_y >= circle_y - (laser_h + circle_r)) and (circle_x + circle_r >= laser_x):
+        if (circle_x < laser_x + laser_w + circle_r) and (laser_y >= circle_y - (laser_h + circle_r)) and (circle_x + circle_r >= laser_x) and (laser_y <= circle_y + (laser_h + circle_r)):
             circle_x = 1000
             laser_draw = False
             circle_y = random.randint(10, 490)
