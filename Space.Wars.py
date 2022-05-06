@@ -1,6 +1,24 @@
 import pygame
 import random
 
+class Laser:
+    def __init__(self,screen,x,y):
+        self.screen = screen
+        self.x = x
+        self.y = y
+        self.h = 10
+        self.w = 60
+        self.color = ((0, 255, 0))
+
+    def move(self):
+        self.x += 5
+
+    def test_hit(self,x,y,r):
+        return (x < self.x + self.w + r) and (self.y >= y - (self.h + r)) and (x + r >= self.x) and (self.y <= y + (self.h + r))
+
+    def draw(self):
+        pygame.draw.rect(self.screen, self.color, pygame.Rect(self.x, self.y, self.w, self.h))
+
 pygame.init()
 
 screen = pygame.display.set_mode((1000, 500))
@@ -15,29 +33,19 @@ circle_r = 20
 square_w = 60
 square_h = 60
 hearts = 10
-laser_x = 60
-laser_y = 60
-laser_w = 10
-laser_h = 10
-laser_draw = False
+lasers = []
 clock = pygame.time.Clock()
 pygame.font.init() # you have to call this at the start,
                    # if you want to use this module.
-if laser_x > 1000:
-    laser_draw = False
-green = ((0, 255, 0))
 while not done:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             done = True
         if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-            laser_draw = True
-            laser_x = square_x
-            laser_y = square_y
+            lasers.append(Laser(screen,square_x,square_y))
     if circle_x <= 0:
         circle_y = random.randint(0, 500)
 
-    laser_x += 5
     # This moves the circle across the screen
     circle_x -= 10
         # Move based on what the person types
@@ -46,12 +54,6 @@ while not done:
     if pressed[pygame.K_DOWN]: square_y += 10
     if pressed[pygame.K_LEFT]: square_x -= 10
     if pressed[pygame.K_RIGHT]: square_x += 10
-    if laser_draw == True:
-        if (circle_x < laser_x + laser_w + circle_r) and (laser_y >= circle_y - (laser_h + circle_r)) and (circle_x + circle_r >= laser_x):
-            circle_x = 1000
-            laser_draw = False
-            circle_y = random.randint(10, 490)
-            Score += 10
     if square_y>440:
         square_y = 440
     if circle_x<0:
@@ -62,7 +64,6 @@ while not done:
         square_x = 1000
     if square_y<0:
         square_y = 0
-    # Check if the circle hits the square
 
     # print("Number of lives: ")
     if circle_x == 0:     # Set the screen red
@@ -70,6 +71,19 @@ while not done:
     else:
         # Set the screen black
         screen.fill((0, 0, 0))
+
+    for laser in lasers:
+        laser.move()
+        if laser.x >= 1000:
+            lasers.remove(laser)
+        elif laser.test_hit(circle_x,circle_y,circle_r):
+            circle_x = 1000
+            lasers.remove(laser)
+            circle_y = random.randint(10, 490)
+            Score += 10
+        else:
+            laser.draw()
+
     # desplay text
     myfont = pygame.font.SysFont('lobster', 50)
     textsurface = myfont.render('Hearts: %d' % hearts, False, (255, 100, 10))
@@ -82,10 +96,6 @@ while not done:
     myfont = pygame.font.SysFont('lobster', 50)
     textsurface = myfont.render('Score: %d' % Score, False, (255, 100, 10))
     screen.blit(textsurface,(380, 40))
-    if laser_x == 1000:
-        laser_draw = False
-    if laser_draw == True:
-        pygame.draw.rect(screen, green, pygame.Rect(laser_x, laser_y, 60, 10))
     if is_blue: color = (255, 200, 10)
     else: color = (100, 255, 0)
     pygame.draw.rect(screen, color, pygame.Rect(square_x, square_y, 60, 60))
