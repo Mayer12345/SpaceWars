@@ -109,6 +109,6 @@ while not done:
     pygame.draw.circle(screen, white, (int(circle_x), int(circle_y)), 40)
     pygame.display.flip()
 
-    clock.tick(60)
+    clock.tick(100)
 
 pygame.time.wait(1000)
