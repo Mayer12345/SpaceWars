@@ -11,7 +11,7 @@ class Laser:
         self.color = ((0, 255, 0))
 
     def move(self):
-        self.x += 5
+        self.x += 12
 
     def test_hit(self,x,y,r):
         return (x < self.x + self.w + r) and (self.y >= y - (self.h + r)) and (x + r >= self.x) and (self.y <= y + (self.h + r))
