@@ -26,6 +26,9 @@ ammo = 10
 Random_box = random.randint(1, 1000)
 done = False
 is_blue = True
+speed = 10
+level = 1
+high_score = 500
 square_x = 30.0
 square_y = 30.0
 Score = 0
@@ -38,7 +41,10 @@ hearts = 10
 lasers = []
 clock = pygame.time.Clock()
 pygame.font.init() # you have to call this at the start,
-                   # if you want to use this module.
+SpaceshipImg = pygame.image.load('Spaceship.png')
+def Spaceship(square_x, square_y):
+    screen.blit(SpaceshipImg,(square_x,square_y))
+                       # if you want to use this module.
 while not done:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -50,7 +56,11 @@ while not done:
         circle_y = random.randint(50, 450)
 
     # This moves the circle across the screen
-    circle_x-= 10
+    circle_x-= speed
+    if Score >= high_score:
+        speed += 5
+        high_score += 500
+        level += 1
         # Move based on what the person types
     pressed = pygame.key.get_pressed()
     if pressed[pygame.K_UP]: square_y -= 15
@@ -73,7 +83,6 @@ while not done:
     else:
         # Set the screen black
         screen.fill((0, 0, 0))
-
     for laser in lasers:
         laser.move()
         if laser.x >= 1000:
@@ -91,6 +100,10 @@ while not done:
     screen.blit(textsurface,(600, 40))
 
     myfont = pygame.font.SysFont('lobster', 50)
+    textsurface = myfont.render('Level: %d' % level, False, (255, 100, 10))
+    screen.blit(textsurface,(800, 40))
+
+    myfont = pygame.font.SysFont('lobster', 50)
     textsurface = myfont.render('Hearts: %d' % hearts, False, (255, 100, 10))
     screen.blit(textsurface,(200, 40))
     if hearts < 1:
@@ -103,9 +116,9 @@ while not done:
     screen.blit(textsurface,(380, 40))
     if is_blue: color = (255, 200, 10)
     else: color = (100, 255, 0)
-    pygame.draw.rect(screen, color, pygame.Rect(square_x, square_y, 60, 60))
     white = (255, 255, 255)
     pygame.draw.circle(screen, white, (int(circle_x), int(circle_y)), 40)
+    Spaceship(square_x,square_y)
     pygame.display.flip()
 
     clock.tick(100)
