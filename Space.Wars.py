@@ -23,6 +23,7 @@ pygame.init()
 
 screen = pygame.display.set_mode((1000, 500))
 ammo = 10
+Random_box = random.randint(1, 1000)
 done = False
 is_blue = True
 square_x = 30.0
@@ -49,13 +50,13 @@ while not done:
         circle_y = random.randint(50, 450)
 
     # This moves the circle across the screen
-    circle_x -= 10
+    circle_x-= 10
         # Move based on what the person types
     pressed = pygame.key.get_pressed()
-    if pressed[pygame.K_UP]: square_y -= 10
-    if pressed[pygame.K_DOWN]: square_y += 10
-    if pressed[pygame.K_LEFT]: square_x -= 10
-    if pressed[pygame.K_RIGHT]: square_x += 10
+    if pressed[pygame.K_UP]: square_y -= 15
+    if pressed[pygame.K_DOWN]: square_y += 15
+    if pressed[pygame.K_LEFT]: square_x -= 15
+    if pressed[pygame.K_RIGHT]: square_x += 15
     if square_y>440:
         square_y = 440
     if circle_x<0:
@@ -66,9 +67,8 @@ while not done:
         square_x = 1000
     if square_y<0:
         square_y = 0
-
     # print("Number of lives: ")
-    if circle_x == 0:     # Set the screen red
+    if circle_x >= 1000:     # Set the screen red
             hearts -= 1
     else:
         # Set the screen black
@@ -85,7 +85,6 @@ while not done:
             Score += 10
         else:
             laser.draw()
-
     # desplay text
     myfont = pygame.font.SysFont('lobster', 50)
     textsurface = myfont.render('Ammo: %d' % (ammo - len(lasers)), False, (255, 100, 10))
