@@ -33,7 +33,7 @@ done = False
 is_blue = True
 speed = 10
 level = 1
-high_score = 500
+high_score = 1000
 square_x = 30.0
 square_y = 30.0
 Score = 0
@@ -74,7 +74,7 @@ while not done:
     circle_x-= speed
     if Score >= high_score:
         speed += 5
-        high_score += 500
+        high_score += 1000
         level += 1
         # Move based on what the person types
     pressed = pygame.key.get_pressed()
