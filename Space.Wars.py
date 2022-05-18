@@ -24,14 +24,13 @@ class Laser:
         pygame.draw.rect(self.screen, self.color, pygame.Rect(self.x, self.y, self.w, self.h))
 
 pygame.init()
-
+screen_x = 500
+screen_y = 1000
 screen = pygame.display.set_mode((screen_y, screen_x))
 ammo = 10
 Random_box = random.randint(1, 1000)
 done = False
 is_blue = True
-screen_x = 1000
-screen_y = 500
 speed = 10
 level = 1
 high_score = 500
