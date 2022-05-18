@@ -13,7 +13,11 @@ class Laser:
     def move(self):
         self.x += 12
 
-    def test_hit(self,x,y,r):
+    def test_hit(self,x,y):
+        r = Meteor_h/2
+        x += r
+        y += r
+        r -= 5
         return (x < self.x + self.w + r) and (self.y >= y - (self.h + r)) and (x + r >= self.x) and (self.y <= y + (self.h + r))
 
     def draw(self):
@@ -21,11 +25,13 @@ class Laser:
 
 pygame.init()
 
-screen = pygame.display.set_mode((1000, 500))
+screen = pygame.display.set_mode((screen_y, screen_x))
 ammo = 10
 Random_box = random.randint(1, 1000)
 done = False
 is_blue = True
+screen_x = 1000
+screen_y = 500
 speed = 10
 level = 1
 high_score = 500
@@ -33,17 +39,27 @@ square_x = 30.0
 square_y = 30.0
 Score = 0
 circle_x = 960
-circle_y = 460
-circle_r = 20
+circle_y = random.randint(130,370)
+circle_r = 65
 square_w = 60
 square_h = 60
 hearts = 10
 lasers = []
+Meteor_scale = 2.0
+Meteor_w = int(80*Meteor_scale)
+Meteor_h = int(54*Meteor_scale)
+spaceship_w = 130
+spaceship_h = 130
 clock = pygame.time.Clock()
 pygame.font.init() # you have to call this at the start,
 SpaceshipImg = pygame.image.load('Spaceship.png')
+SpaceshipImg = pygame.transform.scale(SpaceshipImg, (spaceship_w,spaceship_h ))
 def Spaceship(square_x, square_y):
     screen.blit(SpaceshipImg,(square_x,square_y))
+MeteorImg = pygame.image.load('Meteor.png')
+MeteorImg = pygame.transform.scale(MeteorImg,(Meteor_w,Meteor_h ))
+def Meteor(circle_x, circle_y):
+    screen.blit(MeteorImg,(circle_x,circle_y))
                        # if you want to use this module.
 while not done:
     for event in pygame.event.get():
@@ -51,9 +67,9 @@ while not done:
             done = True
         if len(lasers) < ammo:
             if event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-                lasers.append(Laser(screen,square_x,square_y))
+                lasers.append(Laser(screen,square_x + spaceship_w,square_y +spaceship_h/2))
     if circle_x <= 0:
-        circle_y = random.randint(50, 450)
+        circle_y = random.randint(130,370)
 
     # This moves the circle across the screen
     circle_x-= speed
@@ -67,28 +83,28 @@ while not done:
     if pressed[pygame.K_DOWN]: square_y += 15
     if pressed[pygame.K_LEFT]: square_x -= 15
     if pressed[pygame.K_RIGHT]: square_x += 15
-    if square_y>440:
-        square_y = 440
+    if square_y>370:
+        square_y = 370
     if circle_x<0:
-        circle_x = 1000
+        circle_x = screen_y
     if square_x<0:
         square_x = 0
-    if square_x>1000:
-        square_x = 1000
+    if square_x>screen_y:
+        square_x = screen_y
     if square_y<0:
         square_y = 0
     # print("Number of lives: ")
-    if circle_x >= 1000:     # Set the screen red
+    if circle_x >= screen_y:     # Set the screen red
             hearts -= 1
     else:
         # Set the screen black
         screen.fill((0, 0, 0))
     for laser in lasers:
         laser.move()
-        if laser.x >= 1000:
+        if laser.x >= screen_y:
             lasers.remove(laser)
-        elif laser.test_hit(circle_x,circle_y,circle_r):
-            circle_x = 1000
+        elif laser.test_hit(circle_x,circle_y):
+            circle_x = screen_y
             lasers.remove(laser)
             circle_y = random.randint(100, 300)
             Score += 10
@@ -117,7 +133,7 @@ while not done:
     if is_blue: color = (255, 200, 10)
     else: color = (100, 255, 0)
     white = (255, 255, 255)
-    pygame.draw.circle(screen, white, (int(circle_x), int(circle_y)), 40)
+    Meteor(circle_x,circle_y)
     Spaceship(square_x,square_y)
     pygame.display.flip()
 
