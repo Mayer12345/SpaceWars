@@ -24,15 +24,19 @@ class Laser:
         pygame.draw.rect(self.screen, self.color, pygame.Rect(self.x, self.y, self.w, self.h))
 
 pygame.init()
-screen_x = 500
-screen_y = 1000
-screen = pygame.display.set_mode((screen_y, screen_x))
+screen_x = 1000
+screen_y = 500
+screen = pygame.display.set_mode((screen_x, screen_y))
 ammo = 10
 Random_box = random.randint(1, 1000)
 done = False
 is_blue = True
 speed = 10
 level = 1
+white = (255,255,255)
+black = (0,0,0)
+red = (255,0,0)
+green = (0,255,0)
 high_score = 1000
 square_x = 30.0
 square_y = 30.0
@@ -49,6 +53,8 @@ Meteor_w = int(80*Meteor_scale)
 Meteor_h = int(54*Meteor_scale)
 spaceship_w = 130
 spaceship_h = 130
+SpaceBackground_w = screen_x
+SpaceBackground_h = screen_y
 clock = pygame.time.Clock()
 pygame.font.init() # you have to call this at the start,
 SpaceshipImg = pygame.image.load('Spaceship.png')
@@ -59,6 +65,10 @@ MeteorImg = pygame.image.load('Meteor.png')
 MeteorImg = pygame.transform.scale(MeteorImg,(Meteor_w,Meteor_h ))
 def Meteor(circle_x, circle_y):
     screen.blit(MeteorImg,(circle_x,circle_y))
+SpaceBackgroundImg = pygame.image.load('SpaceBackground.jpg')
+SpaceBackgroundImg = pygame.transform.scale(SpaceBackgroundImg, (SpaceBackground_w,SpaceBackground_h ))
+def SpaceBackground(screen_x, screen_y):
+    screen.blit(SpaceBackgroundImg,(0,0))
                        # if you want to use this module.
 while not done:
     for event in pygame.event.get():
@@ -71,6 +81,7 @@ while not done:
         circle_y = random.randint(130,370)
 
     # This moves the circle across the screen
+    SpaceBackground(screen_x,screen_y)
     circle_x-= speed
     if Score >= high_score:
         speed += 5
@@ -93,17 +104,14 @@ while not done:
     if square_y<0:
         square_y = 0
     # print("Number of lives: ")
-    if circle_x >= screen_y:     # Set the screen red
+    if circle_x >= screen_x:     # Set the screen red
             hearts -= 1
-    else:
-        # Set the screen black
-        screen.fill((0, 0, 0))
     for laser in lasers:
         laser.move()
-        if laser.x >= screen_y:
+        if laser.x >= screen_x:
             lasers.remove(laser)
         elif laser.test_hit(circle_x,circle_y):
-            circle_x = screen_y
+            circle_x = screen_x
             lasers.remove(laser)
             circle_y = random.randint(100, 300)
             Score += 10
@@ -111,27 +119,26 @@ while not done:
             laser.draw()
     # desplay text
     myfont = pygame.font.SysFont('lobster', 50)
-    textsurface = myfont.render('Ammo: %d' % (ammo - len(lasers)), False, (255, 100, 10))
+    textsurface = myfont.render('Ammo: %d' % (ammo - len(lasers)), False, red)
     screen.blit(textsurface,(600, 40))
 
     myfont = pygame.font.SysFont('lobster', 50)
-    textsurface = myfont.render('Level: %d' % level, False, (255, 100, 10))
+    textsurface = myfont.render('Level: %d' % level, False, red)
     screen.blit(textsurface,(800, 40))
 
     myfont = pygame.font.SysFont('lobster', 50)
-    textsurface = myfont.render('Hearts: %d' % hearts, False, (255, 100, 10))
+    textsurface = myfont.render('Hearts: %d' % hearts, False, red)
     screen.blit(textsurface,(200, 40))
     if hearts < 1:
         myfont = pygame.font.SysFont('Comic Sans MS', 220)
-        textsurface = myfont.render('GAME OVER', False, (255, 0, 0))
+        textsurface = myfont.render('GAME OVER', False, red)
         screen.blit(textsurface,(25, 200))
         done = True
     myfont = pygame.font.SysFont('lobster', 50)
-    textsurface = myfont.render('Score: %d' % Score, False, (255, 100, 10))
+    textsurface = myfont.render('Score: %d' % Score, False, red)
     screen.blit(textsurface,(380, 40))
     if is_blue: color = (255, 200, 10)
     else: color = (100, 255, 0)
-    white = (255, 255, 255)
     Meteor(circle_x,circle_y)
     Spaceship(square_x,square_y)
     pygame.display.flip()
