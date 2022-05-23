@@ -8,7 +8,7 @@ class Laser:
         self.y = y
         self.h = 10
         self.w = 60
-        self.color = ((0, 255, 0))
+        self.color = LaserColor[laserNumber[current_color]]
 
     def move(self):
         self.x += 12
@@ -22,7 +22,6 @@ class Laser:
 
     def draw(self):
         pygame.draw.rect(self.screen, self.color, pygame.Rect(self.x, self.y, self.w, self.h))
-
 pygame.init()
 screen_x = 1000
 screen_y = 500
@@ -33,10 +32,23 @@ done = False
 is_blue = True
 speed = 10
 level = 1
-white = (255,255,255)
-black = (0,0,0)
-red = (255,0,0)
-green = (0,255,0)
+LaserColor = {'green': (0,255,0),
+'mint': (10,255,150),
+'silver': (150,150,150),
+'tan': (200,100,100),
+'gray': (100,100,100),
+'pink': (255,0,255),
+'purple': (100,0,120),
+'megenta': (150,0,150),
+'yellow': (255,255,0),
+'gold': (200,200,0),
+'orange': (255,100,5),
+'blue': (0,0,255),
+'white': (255,255,255),
+'black': (0,0,0),
+'red': (255,0,0),}
+current_color = 0
+laserNumber = [x for x in LaserColor.keys()]
 high_score = 1000
 square_x = 30.0
 square_y = 30.0
@@ -96,11 +108,11 @@ while not done:
     if square_y>370:
         square_y = 370
     if circle_x<0:
-        circle_x = screen_y
+        circle_x = screen_x
     if square_x<0:
         square_x = 0
-    if square_x>screen_y:
-        square_x = screen_y
+    if square_x>screen_x:
+        square_x = screen_x
     if square_y<0:
         square_y = 0
     # print("Number of lives: ")
@@ -119,23 +131,23 @@ while not done:
             laser.draw()
     # desplay text
     myfont = pygame.font.SysFont('lobster', 50)
-    textsurface = myfont.render('Ammo: %d' % (ammo - len(lasers)), False, red)
+    textsurface = myfont.render('Ammo: %d' % (ammo - len(lasers)), False, LaserColor['red'])
     screen.blit(textsurface,(600, 40))
 
     myfont = pygame.font.SysFont('lobster', 50)
-    textsurface = myfont.render('Level: %d' % level, False, red)
+    textsurface = myfont.render('Level: %d' % level, False, LaserColor['red'])
     screen.blit(textsurface,(800, 40))
 
     myfont = pygame.font.SysFont('lobster', 50)
-    textsurface = myfont.render('Hearts: %d' % hearts, False, red)
+    textsurface = myfont.render('Hearts: %d' % hearts, False, LaserColor['red'])
     screen.blit(textsurface,(200, 40))
     if hearts < 1:
         myfont = pygame.font.SysFont('Comic Sans MS', 220)
-        textsurface = myfont.render('GAME OVER', False, red)
+        textsurface = myfont.render('GAME OVER', False, LaserColor['red'])
         screen.blit(textsurface,(25, 200))
         done = True
     myfont = pygame.font.SysFont('lobster', 50)
-    textsurface = myfont.render('Score: %d' % Score, False, red)
+    textsurface = myfont.render('Score: %d' % Score, False, LaserColor['red'])
     screen.blit(textsurface,(380, 40))
     if is_blue: color = (255, 200, 10)
     else: color = (100, 255, 0)
