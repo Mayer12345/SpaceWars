@@ -48,7 +48,8 @@ LaserColor = {'green': (0,255,0),
 'black': (0,0,0),
 'red': (255,0,0),}
 current_color = 0
-laserNumber = [x for x in LaserColor.keys()]
+#laserNumber = [x for x in LaserColor.keys()]
+laserNumber = ['mint','blue','black']
 high_score = 1000
 square_x = 30.0
 square_y = 30.0
@@ -59,6 +60,7 @@ circle_r = 65
 square_w = 60
 square_h = 60
 hearts = 10
+color
 lasers = []
 Meteor_scale = 2.0
 Meteor_w = int(80*Meteor_scale)
@@ -105,6 +107,8 @@ while not done:
     if pressed[pygame.K_DOWN]: square_y += 15
     if pressed[pygame.K_LEFT]: square_x -= 15
     if pressed[pygame.K_RIGHT]: square_x += 15
+    if pressed[pygame.K_l]: current_color += 1
+    if current_color == len(laserNumber): current_color = 0
     if square_y>370:
         square_y = 370
     if circle_x<0:
