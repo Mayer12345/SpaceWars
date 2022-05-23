@@ -39,7 +39,7 @@ LaserColor = {'green': (0,255,0),
 'gray': (100,100,100),
 'pink': (255,0,255),
 'purple': (100,0,120),
-'megenta': (150,0,150),
+'magenta': (150,0,150),
 'yellow': (255,255,0),
 'gold': (200,200,0),
 'orange': (255,100,5),
@@ -49,7 +49,7 @@ LaserColor = {'green': (0,255,0),
 'red': (255,0,0),}
 current_color = 0
 #laserNumber = [x for x in LaserColor.keys()]
-laserNumber = ['green','mint','silver','tan','gray','pink','purple','megenta','yellow','gold','orange','blue','white','black','red',]
+laserNumber = ['green','mint','silver','tan','gray','pink','purple','magenta','yellow','gold','orange','blue','white','black','red',]
 high_score = 1000
 square_x = 30.0
 square_y = 30.0
@@ -144,6 +144,10 @@ while not done:
     myfont = pygame.font.SysFont('lobster', 50)
     textsurface = myfont.render('Level: %d' % level, False, LaserColor['red'])
     screen.blit(textsurface,(800, 40))
+
+    myfont = pygame.font.SysFont('lobster', 50)
+    textsurface = myfont.render('Color: %s' % laserNumber[current_color], False, LaserColor['red'])
+    screen.blit(textsurface,(200, 450))
 
     myfont = pygame.font.SysFont('lobster', 50)
     textsurface = myfont.render('Hearts: %d' % hearts, False, LaserColor['red'])
