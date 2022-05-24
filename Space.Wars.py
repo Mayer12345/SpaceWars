@@ -50,7 +50,7 @@ LaserColor = {'green': (0,255,0),
 current_color = 0
 #laserNumber = [x for x in LaserColor.keys()]
 laserNumber = ['green','mint','silver','tan','gray','pink','purple','magenta','yellow','gold','orange','blue','white','black','red',]
-high_score = 1000
+high_score = 500
 square_x = 30.0
 square_y = 30.0
 Score = 0
@@ -99,7 +99,7 @@ while not done:
     circle_x-= speed
     if Score >= high_score:
         speed += 5
-        high_score += 1000
+        high_score += 500
         level += 1
     colorTime -= 1
         # Move based on what the person types
@@ -110,7 +110,7 @@ while not done:
     if pressed[pygame.K_RIGHT]: square_x += 15
     if pressed[pygame.K_l] and colorTime <= 0:
         current_color += 1
-        colorTime = 10
+        colorTime = 6
     if current_color == len(laserNumber): current_color = 0
     if square_y>370:
         square_y = 370
@@ -146,7 +146,7 @@ while not done:
     screen.blit(textsurface,(800, 40))
 
     myfont = pygame.font.SysFont('lobster', 50)
-    textsurface = myfont.render('Color: %s' % laserNumber[current_color], False, LaserColor['red'])
+    textsurface = myfont.render('Color: %s' % laserNumber[current_color], False, [LaserColor[laserNumber]current_color])
     screen.blit(textsurface,(200, 450))
 
     myfont = pygame.font.SysFont('lobster', 50)
