@@ -39,7 +39,7 @@ LaserColor = {'green': (0,255,0),
 'gray': (100,100,100),
 'pink': (255,0,255),
 'purple': (100,0,120),
-'magenta': (150,0,150),
+'magenta': (200,10,150),
 'yellow': (255,255,0),
 'gold': (200,200,0),
 'orange': (255,100,5),
@@ -146,7 +146,7 @@ while not done:
     screen.blit(textsurface,(800, 40))
 
     myfont = pygame.font.SysFont('lobster', 50)
-    textsurface = myfont.render('Color: %s' % laserNumber[current_color], False, [LaserColor[laserNumber]current_color])
+    textsurface = myfont.render('Color: %s' % laserNumber[current_color], False, LaserColor['red'])
     screen.blit(textsurface,(200, 450))
 
     myfont = pygame.font.SysFont('lobster', 50)
