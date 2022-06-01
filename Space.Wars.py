@@ -33,15 +33,8 @@ is_blue = True
 speed = 10
 level = 1
 LaserColor = {'green': (0,255,0),
-'mint': (10,255,150),
-'silver': (150,150,150),
-'tan': (200,100,100),
-'gray': (100,100,100),
 'pink': (255,0,255),
 'purple': (100,0,120),
-'magenta': (200,10,150),
-'yellow': (255,255,0),
-'gold': (200,200,0),
 'orange': (255,100,5),
 'blue': (0,0,255),
 'white': (255,255,255),
@@ -49,7 +42,7 @@ LaserColor = {'green': (0,255,0),
 'red': (255,0,0),}
 current_color = 0
 #laserNumber = [x for x in LaserColor.keys()]
-laserNumber = ['green','mint','silver','tan','gray','pink','purple','magenta','yellow','gold','orange','blue','white','black','red',]
+laserNumber = ['green','pink','orange','blue','white','red',]
 high_score = 500
 square_x = 30.0
 square_y = 30.0
